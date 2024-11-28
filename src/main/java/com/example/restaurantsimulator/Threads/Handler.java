@@ -1,18 +1,18 @@
 package com.example.restaurantsimulator.Threads;
 
 import com.almasb.fxgl.entity.Entity;
-import com.example.pizzitas.models.MonitorMesero;
-import com.example.pizzitas.models.MonitorRecepcionista;
 
 import java.util.List;
 
 
+import com.example.restaurantsimulator.models.Recepcionista;
+import com.example.restaurantsimulator.models.Waiter;
 import javafx.geometry.Point2D;
 
 public class Handler implements Runnable {
 
-    private MonitorRecepcionista monitorRecepcionista;
-    private MonitorMesero monitorMesero;
+    private Recepcionista monitorRecepcionista;
+    private Waiter monitorMesero;
     private final Entity client;
     private final Entity pizza;
 
@@ -21,9 +21,9 @@ public class Handler implements Runnable {
 
     private List<Point2D> posicionesMeseros;
 
-    public Handler(MonitorRecepcionista monitorRecepcionista, MonitorMesero monitorMesero, Entity client, int numClient, List<Entity> waitersList, List<Point2D> posicionesInicialesMeseros, Entity pizza) {
-        this.monitorMesero = new MonitorMesero(7);
-        this.monitorRecepcionista = new MonitorRecepcionista(20);
+    public Handler(Recepcionista monitorRecepcionista, Waiter monitorMesero, Entity client, int numClient, List<Entity> waitersList, List<Point2D> posicionesInicialesMeseros, Entity pizza) {
+        this.monitorMesero = new Waiter(7);
+        this.monitorRecepcionista = new Recepcionista(20);
         this.client = client;
         this.numClient = numClient;
         this.pizza = pizza;
@@ -33,7 +33,7 @@ public class Handler implements Runnable {
 
     @Override
     public void run() {
-        monitorRecepcionista.setMonitorMesero(monitorMesero);
+        monitorRecepcionista.setRecepcionista(monitorMesero);
         while (true) {
 
 

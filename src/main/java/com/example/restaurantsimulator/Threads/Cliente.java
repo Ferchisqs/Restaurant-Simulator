@@ -2,8 +2,9 @@ package com.example.restaurantsimulator.Threads;
 
 
 import com.almasb.fxgl.entity.Entity;
-import com.example.pizzitas.models.MonitorMesero;
-import com.example.pizzitas.models.MonitorRecepcionista;
+
+import com.example.restaurantsimulator.models.Recepcionista;
+import com.example.restaurantsimulator.models.Waiter;
 import javafx.geometry.Point2D;
 
 import java.util.ArrayList;
@@ -13,12 +14,12 @@ import java.util.Random;
 public class Cliente extends Thread {
     private static int contadorClientes = 0;
 
-    private MonitorRecepcionista monitorRecepcionista;
-    private MonitorMesero monitorMesero;
+    private Recepcionista monitorRecepcionista;
+    private Waiter monitorMesero;
 
 
     private final Entity client;
-    private final Entity pizza;
+    private final Entity food;
     private List<Entity> waitersList;
 
 
@@ -31,12 +32,12 @@ public class Cliente extends Thread {
 
 
 
-    public HiloCliente(MonitorRecepcionista monitorRecepcionista, MonitorMesero monitorMesero, Entity client, int numCliente, List<Entity> waitersList, List<Point2D> posicionesMeseros, Entity pizza) {
+    public Cliente(Recepcionista monitorRecepcionista, Waiter monitorMesero, Entity client, int numCliente, List<Entity> waitersList, List<Point2D> posicionesMeseros, Entity food) {
         this.monitorRecepcionista = monitorRecepcionista;
         this.monitorMesero = monitorMesero;
         this.setName("Cliente-" + numCliente);
         this.client = client;
-        this.pizza= pizza;
+        this.food= food;
         this.waitersList = waitersList;
         this.posicionesMeseros = posicionesMeseros;
         //posiciones.add(new Point2D(200, 200));
@@ -103,9 +104,9 @@ public class Cliente extends Thread {
     }
 
     public void entregarPizza() {
-        monitorRecepcionista.entregarPizza(this);
+        monitorRecepcionista.deliverFood(this);
         Point2D newposition = this.getPosicionAsignada();
-        pizza.setPosition(newposition);
+        food.setPosition(newposition);
     }
 
     public void comerPizza(){
@@ -123,12 +124,12 @@ public class Cliente extends Thread {
 
     @Override
     public void run() {
-        monitorRecepcionista.llegarCliente(this);
+        monitorRecepcionista.customerArrived(this);
         entrarRestaurante();
 
         pedirPizza();
 
-        monitorMesero.atenderPedido(this);
+        monitorMesero.fulfillOrder(this);
         esperarPizza();
         try {
             Thread.sleep(3000);
@@ -145,7 +146,7 @@ public class Cliente extends Thread {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        monitorRecepcionista.abandonarRestaurante(this, client, pizza);
+        monitorRecepcionista.leaveRestaurant(this, client, food);
         try {
             Thread.sleep(5000);
         } catch (InterruptedException e) {
