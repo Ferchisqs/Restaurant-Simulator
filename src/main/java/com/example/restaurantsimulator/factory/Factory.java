@@ -6,6 +6,8 @@ import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.EntityFactory;
 import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.entity.Spawns;
+import com.almasb.fxgl.physics.PhysicsComponent;
+import com.almasb.fxgl.physics.box2d.dynamics.BodyType;
 import com.example.restaurantsimulator.factory.Type.Type;
 
 public class Factory implements EntityFactory {
@@ -16,7 +18,7 @@ public class Factory implements EntityFactory {
         followComponent.setSpeed(1);
         return FXGL.entityBuilder(data)
                 .type(Type.CLIENT)
-                .view("client.png")
+                .view("customer.png")
                 .with(followComponent)
                 .buildAndAttach();
     }
@@ -28,7 +30,7 @@ public class Factory implements EntityFactory {
         followComponent.setSpeed(1);
         return FXGL.entityBuilder(data)
                 .type(Type.WAITERS)
-                .view("Waiter.png")
+                .view("waiter.png")
                 .with(followComponent)
                 .buildAndAttach();
     }
@@ -42,5 +44,17 @@ public class Factory implements EntityFactory {
                 .view("Food.png")
                 .with(followComponent)
                 .buildAndAttach();
+    }
+
+
+    @Spawns("recepcionist")
+    public Entity newRecepcionist(SpawnData data){
+        PhysicsComponent physics = new PhysicsComponent();
+        physics.setBodyType(BodyType.KINEMATIC);
+        return FXGL.entityBuilder(data)
+                .type(Type.RECEPCIONIST)
+                .view("recepcionista.png")
+                .with(physics)
+                .build();
     }
 }

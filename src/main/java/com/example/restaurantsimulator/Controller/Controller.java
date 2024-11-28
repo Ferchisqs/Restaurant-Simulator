@@ -5,8 +5,8 @@ import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
 import com.example.restaurantsimulator.Threads.Handler;
 import com.example.restaurantsimulator.factory.Factory;
-import com.example.restaurantsimulator.models.MonitorMesero;
-import com.example.restaurantsimulator.models.MonitorRecepcionista;
+import com.example.restaurantsimulator.models.Recepcionista;
+import com.example.restaurantsimulator.models.Waiter;
 import javafx.fxml.Initializable;
 import javafx.geometry.Point2D;
 import javafx.util.Duration;
@@ -19,8 +19,8 @@ import java.util.ResourceBundle;
 
 
 public class Controller implements Initializable {
-    private MonitorMesero monitorMesero;
-    private MonitorRecepcionista monitorRecepcionista;
+    private Waiter monitorMesero;
+    private Recepcionista monitorRecepcionista;
     private Handler handler;
     private static int contadorClientes = 0;
     private static int contadorMeseros = 0;
@@ -56,3 +56,6 @@ public class Controller implements Initializable {
                 new Thread(handler).start();
             }, Duration.seconds(delay + i));
         }
+
+    }
+}
